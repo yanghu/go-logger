@@ -16,6 +16,7 @@ func TestLevels(t *testing.T) {
 }
 
 func TestTurnOn(t *testing.T) {
+	// use pipes to capture stdout and stderr
 	oldStdout := os.Stdout
 	oldStderr := os.Stderr
 	r, w, _ := os.Pipe()
@@ -24,9 +25,9 @@ func TestTurnOn(t *testing.T) {
 	os.Stderr = we
 
 	turnOnLogging(LevelWarning, nil)
-	logger.Info.Output(2, "infoout")
-	logger.Warning.Output(2, "warningout")
-	logger.Error.Output(2, "errorout")
+	Info("info %d", 123)
+	Warning("warning %d", 123)
+	Error("error %d", 123)
 	we.Close()
 	w.Close()
 
@@ -36,7 +37,8 @@ func TestTurnOn(t *testing.T) {
 	os.Stderr = oldStderr
 	outStr := string(out[:])
 	errStr := string(errOut[:])
-	assert.True(t, strings.Contains(outStr, "warningout"), "Should have warning printed")
-	assert.True(t, strings.Contains(errStr, "errorout"), "Should have error printed")
-	assert.False(t, strings.Contains(outStr, "infoout"), "Should not have info printed")
+
+	assert.True(t, strings.Contains(outStr, "warning 123"), "Should have warning printed")
+	assert.True(t, strings.Contains(errStr, "error 123"), "Should have error")
+	assert.False(t, strings.Contains(outStr, "info"), "Should not have info printed")
 }
