@@ -8,8 +8,6 @@ import (
 	"os"
 )
 
-type Level int
-
 const (
 	LevelTraceOnly Level = 1 << iota
 	LevelInfoOnly
@@ -20,6 +18,8 @@ const (
 	LevelWarning = LevelWarningOnly | LevelErrorOnly
 	LevelError   = LevelErrorOnly
 )
+
+type Level int
 
 // LevelLogger stores loggers for each level
 type LevelLogger struct {
