@@ -2,6 +2,8 @@
 
 This package is a simple golang logger wrapper, with four levels of logging (trace, info, warning and error). Level of logging is specified at initialization. 
 
+Click [here](https://godoc.org/bitbucket.org/yanghu/logger) to view docs.
+
 Any os.Writer type can be used as the logger output. 
 
 An redis writer is implemented in `logger/redis` package. User can create a handler which satisfies os.Writer interface, and writes log to redis. like this

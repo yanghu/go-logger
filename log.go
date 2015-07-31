@@ -1,4 +1,4 @@
-// Package logger provides a logger with different levels
+// Package logger provides a logger with different logging level support and redis support.
 package logger
 
 import (
@@ -21,6 +21,7 @@ const (
 	LevelError   = LevelErrorOnly
 )
 
+// LevelLogger stores loggers for each level
 type LevelLogger struct {
 	LogLevel Level
 	Trace    *log.Logger
@@ -29,42 +30,47 @@ type LevelLogger struct {
 	Error    *log.Logger
 }
 
-// a global logger provide singleton
+// a global logger provide singleton service. It is called within actual loggin actions
+// like Info(), Error(), etc.
 var logger LevelLogger
 
-func turnOnLogging(level Level, fileHandle io.Writer) {
+// It initializes the logger with specified logging level. By default, all
+// levels of loggin goes to stdout. if writer is not nil, then the message
+// also goes to the writer. It could be a file handle, or a redis writer
+// implemented in logger/redis package.
+func turnOnLogging(level Level, writer io.Writer) {
 	traceHandle := ioutil.Discard
 	infoHandle := ioutil.Discard
 	warningHandle := ioutil.Discard
 	errorHandle := ioutil.Discard
 
 	if level&LevelTraceOnly != 0 {
-		if fileHandle != nil {
-			traceHandle = io.MultiWriter(fileHandle, os.Stdout)
+		if writer != nil {
+			traceHandle = io.MultiWriter(writer, os.Stdout)
 		} else {
 			traceHandle = os.Stdout
 		}
 	}
 
 	if level&LevelInfoOnly != 0 {
-		if fileHandle != nil {
-			infoHandle = io.MultiWriter(fileHandle, os.Stdout)
+		if writer != nil {
+			infoHandle = io.MultiWriter(writer, os.Stdout)
 		} else {
 			infoHandle = os.Stdout
 		}
 	}
 
 	if level&LevelWarningOnly != 0 {
-		if fileHandle != nil {
-			warningHandle = io.MultiWriter(fileHandle, os.Stdout)
+		if writer != nil {
+			warningHandle = io.MultiWriter(writer, os.Stdout)
 		} else {
 			warningHandle = os.Stdout
 		}
 	}
 
 	if level&LevelErrorOnly != 0 {
-		if fileHandle != nil {
-			errorHandle = io.MultiWriter(fileHandle, os.Stderr)
+		if writer != nil {
+			errorHandle = io.MultiWriter(writer, os.Stderr)
 		} else {
 			errorHandle = os.Stderr
 		}
