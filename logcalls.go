@@ -1,4 +1,3 @@
-// Package logger provides a logger with different logging level support and redis support.
 package logger
 
 import (

@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	LevelTraceOnly Level = 1 << iota
+	LevelTraceOnly = 1 << iota
 	LevelInfoOnly
 	LevelWarningOnly
 	LevelErrorOnly
