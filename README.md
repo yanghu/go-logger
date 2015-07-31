@@ -6,7 +6,7 @@ Any os.Writer type can be used as the logger output.
 
 An redis writer is implemented in `logger/redis` package. User can create a handler which satisfies os.Writer interface, and writes log to redis. like this
 
-```
+```go
 import log "bitbucket.org/yanghu/logger"
 import "bitbucket.org/yanghu/logger/redis"
 
