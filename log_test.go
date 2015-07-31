@@ -3,6 +3,7 @@ package levelLog
 
 import (
 	// "fmt"
+	"bitbucket.org/yanghu/levelLog/redisWriter"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
@@ -41,4 +42,8 @@ func TestTurnOn(t *testing.T) {
 	assert.True(t, strings.Contains(outStr, "warning 123"), "Should have warning printed")
 	assert.True(t, strings.Contains(errStr, "error 123"), "Should have error")
 	assert.False(t, strings.Contains(outStr, "info"), "Should not have info printed")
+}
+
+func TestRedis(t *testing.T) {
+
 }
