@@ -6,6 +6,7 @@ import (
 	"bitbucket.org/yanghu/levelLog/redisWriter"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
+	"log"
 	"os"
 	"strings"
 	"testing"
@@ -45,5 +46,18 @@ func TestTurnOn(t *testing.T) {
 }
 
 func TestRedis(t *testing.T) {
+	rw, err := redisWriter.NewRedisWriter(redisWriter.ADDRESS, "test_log", 100)
+	if err != nil {
+		log.Fatal(err)
+	}
+	turnOnLogging(LevelWarning, rw)
+	Warning("Warning in redis")
+	Error("Error in redis?")
+	Trace("How about trace")
+	logs := redisWriter.ReadLog(rw.Conn, rw.Logname, rw.EntryLimit)
+	assert.True(t, len(logs) == 2)
+	assert.True(t, strings.Contains(logs[0], "Error"), "last in first out")
 
+	//cleanup
+	rw.FlushLog()
 }

@@ -36,13 +36,17 @@ func (rw *RedisWriter) Write(p []byte) (n int, err error) {
 	return 1, nil
 }
 
+func (rw *RedisWriter) FlushLog() (err error) {
+	_, err = rw.Conn.Do("DEL", rw.Logname)
+	return
+}
+
 // can also use the following code to deal with sring reply
 // 	for len(reply) > 0 {
 // 		var logString string
 // 		reply, err = redis.Scan(reply, &logString)
 // 		log.Println(logString)
 // 	}
-
 func ReadLog(conn redis.Conn, logName string, limit int) (logs []string) {
 	reply, err := redis.Values(conn.Do("LRANGE", logName, 0, limit))
 	if err != nil {
