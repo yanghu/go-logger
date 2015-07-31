@@ -54,7 +54,7 @@ func TestRedis(t *testing.T) {
 	Warning("Warning in redis")
 	Error("Error in redis?")
 	Trace("How about trace")
-	logs := redis.ReadLog(rw.Conn, rw.Logname, rw.EntryLimit)
+	logs := redis.ReadLogs(rw.Conn, rw.Logname, rw.EntryLimit)
 	assert.True(t, len(logs) == 2)
 	assert.True(t, strings.Contains(logs[0], "Error"), "last in first out")
 

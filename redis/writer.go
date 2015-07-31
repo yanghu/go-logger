@@ -47,7 +47,7 @@ func (rw *Writer) FlushLog() (err error) {
 // 		reply, err = redis.Scan(reply, &logString)
 // 		log.Println(logString)
 // 	}
-func ReadLog(conn redis.Conn, logName string, limit int) (logs []string) {
+func ReadLogs(conn redis.Conn, logName string, limit int) (logs []string) {
 	reply, err := redis.Values(conn.Do("LRANGE", logName, 0, limit))
 	if err != nil {
 		log.Fatal(err)

@@ -18,6 +18,12 @@ if err != nil {
 log.turnOnLogging(LevelWarning, rw)
 log.Warninig("This warning will go to redis")
 log.Error("So will this error")
+
+// Read logs in go. provide a redis connection(not necessarily the one our writer uses though)
+// ReadLogs returns a slice of strings
+readSize = 10 //read 10 entries
+logs := redis.ReadLogs(rw.Conn, rw.Logname, readSize)
+
 ```
 
 

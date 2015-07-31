@@ -21,7 +21,7 @@ func TestWrite(t *testing.T) {
 	writer.Write([]byte{'g', 'o', 'l'})
 	// verify the byte is wriiten
 
-	logs := ReadLog(writer.Conn, writer.Logname, 5)
+	logs := ReadLogs(writer.Conn, writer.Logname, 5)
 	assert.True(t, len(logs) == 3, "log limit doesn't work!")
 	//cleanup
 	writer.Conn.Do("DEL", writer.Logname)
