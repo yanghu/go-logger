@@ -1,5 +1,5 @@
-// Package levelLog provides ...
-package levelLog
+// Package logger provides ...
+package logger
 
 import (
 	"fmt"

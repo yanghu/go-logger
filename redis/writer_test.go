@@ -1,5 +1,5 @@
-// Package redisHandler provides ...
-package redisWriter
+// Package redis provides a redis writer implementation for logger
+package redis
 
 import (
 	// "github.com/garyburd/redigo/redis"
@@ -9,7 +9,7 @@ import (
 )
 
 func TestWrite(t *testing.T) {
-	writer, err := NewRedisWriter(ADDRESS, "logtest", 2)
+	writer, err := NewWriter(ADDRESS, "logtest", 2)
 	if err != nil {
 		log.Fatal(err)
 	}

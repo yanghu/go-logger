@@ -1,5 +1,5 @@
-// Package redisWriter provides ...
-package redisWriter
+// Package redis provides a redis writer implementation for logger
+package redis
 
 import (
 	"github.com/garyburd/redigo/redis"
@@ -11,15 +11,15 @@ const (
 	NETWORK = "tcp"
 )
 
-type RedisWriter struct {
+type Writer struct {
 	address    string
 	Logname    string
 	Conn       redis.Conn
 	EntryLimit int
 }
 
-func NewRedisWriter(address, logname string, entryLimit int) (rw *RedisWriter, err error) {
-	rw = &RedisWriter{address: address, Logname: logname, EntryLimit: entryLimit}
+func NewWriter(address, logname string, entryLimit int) (rw *Writer, err error) {
+	rw = &Writer{address: address, Logname: logname, EntryLimit: entryLimit}
 	rw.Conn, err = redis.Dial(NETWORK, address)
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func NewRedisWriter(address, logname string, entryLimit int) (rw *RedisWriter, e
 	return
 }
 
-func (rw *RedisWriter) Write(p []byte) (n int, err error) {
+func (rw *Writer) Write(p []byte) (n int, err error) {
 	rw.Conn.Send("LPUSH", rw.Logname, string(p[:]))
 	rw.Conn.Send("LTRIM", rw.Logname, 0, rw.EntryLimit)
 	if err := rw.Conn.Flush(); err != nil {
@@ -36,7 +36,7 @@ func (rw *RedisWriter) Write(p []byte) (n int, err error) {
 	return 1, nil
 }
 
-func (rw *RedisWriter) FlushLog() (err error) {
+func (rw *Writer) FlushLog() (err error) {
 	_, err = rw.Conn.Do("DEL", rw.Logname)
 	return
 }

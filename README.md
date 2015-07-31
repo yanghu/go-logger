@@ -4,14 +4,14 @@ This package is a simple golang logger wrapper, with four levels of logging (tra
 
 Any os.Writer type can be used as the logger output. 
 
-An redis writer is implemented in `redisWriter` package. User can create a handler which satisfies os.Writer interface, and writes log to redis. like this
+An redis writer is implemented in `logger/redis` package. User can create a handler which satisfies os.Writer interface, and writes log to redis. like this
 
 ```
-import log "bitbucket.org/yanghu/levelLog"
-import "bitbucket.org/yanghu/levelLog/redisWriter"
+import log "bitbucket.org/yanghu/logger"
+import "bitbucket.org/yanghu/logger/redis"
 
 // NewRedisWriter initialization asks the redis server address, a list name to store logs, and the number of logs to store
-rw, err := redisWriter.NewRedisWriter(redisWriter.ADDRESS, "test_log", 10000)
+rw, err := redis.NewWriter(redis.ADDRESS, "test_log", 10000)
 if err != nil {
     log.Fatal(err)
 }

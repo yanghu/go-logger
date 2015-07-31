@@ -1,9 +1,9 @@
-// Package levelLog provides ...
-package levelLog
+// Package logger provides ...
+package logger
 
 import (
 	// "fmt"
-	"bitbucket.org/yanghu/levelLog/redisWriter"
+	"bitbucket.org/yanghu/logger/redis"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"log"
@@ -46,7 +46,7 @@ func TestTurnOn(t *testing.T) {
 }
 
 func TestRedis(t *testing.T) {
-	rw, err := redisWriter.NewRedisWriter(redisWriter.ADDRESS, "test_log", 100)
+	rw, err := redis.NewWriter(redis.ADDRESS, "test_log", 100)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func TestRedis(t *testing.T) {
 	Warning("Warning in redis")
 	Error("Error in redis?")
 	Trace("How about trace")
-	logs := redisWriter.ReadLog(rw.Conn, rw.Logname, rw.EntryLimit)
+	logs := redis.ReadLog(rw.Conn, rw.Logname, rw.EntryLimit)
 	assert.True(t, len(logs) == 2)
 	assert.True(t, strings.Contains(logs[0], "Error"), "last in first out")
 
