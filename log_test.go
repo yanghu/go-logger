@@ -61,3 +61,8 @@ func TestRedis(t *testing.T) {
 	//cleanup
 	rw.FlushLog()
 }
+
+func TestConstNames(t *testing.T) {
+	log.Println(LevelTraceOnly)
+	log.Println(LevelInfo)
+}

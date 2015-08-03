@@ -8,8 +8,12 @@ import (
 	"os"
 )
 
+//go:generate stringer -type=Level
+
+type Level int
+
 const (
-	LevelTraceOnly = 1 << iota
+	LevelTraceOnly Level = 1 << iota
 	LevelInfoOnly
 	LevelWarningOnly
 	LevelErrorOnly
@@ -18,8 +22,6 @@ const (
 	LevelWarning = LevelWarningOnly | LevelErrorOnly
 	LevelError   = LevelErrorOnly
 )
-
-type Level int
 
 // LevelLogger stores loggers for each level
 type LevelLogger struct {
