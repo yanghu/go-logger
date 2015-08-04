@@ -4,6 +4,7 @@ package logger
 import (
 	// "fmt"
 	"bitbucket.org/yanghu/logger/redis"
+	"errors"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"log"
@@ -29,7 +30,7 @@ func TestTurnOn(t *testing.T) {
 	turnOnLogging(LevelWarning, nil)
 	Info("info %d", 123)
 	Warning("warning %d", 123)
-	Error("error %d", 123)
+	Error(nil, "error %d", 123)
 	we.Close()
 	w.Close()
 
@@ -52,7 +53,7 @@ func TestRedis(t *testing.T) {
 	}
 	turnOnLogging(LevelWarning, rw)
 	Warning("Warning in redis")
-	Error("Error in redis?")
+	Error(errors.New("UnknownError"), "Error in redis?")
 	Trace("How about trace")
 	logs := redis.ReadLogs(rw.Conn, rw.Logname, rw.EntryLimit)
 	assert.True(t, len(logs) == 2)
