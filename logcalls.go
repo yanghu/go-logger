@@ -12,6 +12,10 @@ func Info(format string, arg ...interface{}) {
 	logger.Info.Output(2, fmt.Sprintf(format, arg...))
 }
 
+func InfoRaw(output string) {
+	logger.Info.Output(2, output)
+}
+
 func Warning(format string, arg ...interface{}) {
 	logger.Warning.Output(2, fmt.Sprintf(format, arg...))
 }
