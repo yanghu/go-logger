@@ -16,6 +16,6 @@ func Warning(format string, arg ...interface{}) {
 	logger.Warning.Output(2, fmt.Sprintf(format, arg...))
 }
 
-func Error(format string, arg ...interface{}) {
-	logger.Error.Output(2, fmt.Sprintf(format, arg...))
+func Error(err error, format string, arg ...interface{}) {
+	logger.Error.Output(2, fmt.Sprintf("%s: %s", fmt.Sprintf(format, arg...), err))
 }
