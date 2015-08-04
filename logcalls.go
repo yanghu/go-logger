@@ -17,7 +17,7 @@ func Warning(format string, arg ...interface{}) {
 }
 
 func Error(err error, format string, arg ...interface{}) {
-	logger.Error.Output(2, fmt.Sprintf("%s:%s", err, fmt.Sprintf(format, arg...)))
+	logger.Error.Output(2, fmt.Sprintf("%s: %s", fmt.Sprintf(format, arg...), err))
 }
 
 func TraceRaw(output string) {
