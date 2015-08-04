@@ -36,6 +36,10 @@ type LevelLogger struct {
 // like Info(), Error(), etc.
 var logger LevelLogger
 
+func Start(level Level, writer io.Writer) {
+	turnOnLogging(level, writer)
+}
+
 // It initializes the logger with specified logging level. By default, all
 // levels of loggin goes to stdout. if writer is not nil, then the message
 // also goes to the writer. It could be a file handle, or a redis writer
